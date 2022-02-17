@@ -71,7 +71,7 @@ private class AccountWorker_Test
     @isTest
     private static void HandleContactsDeleted_BulkTest()
     {
-        List<Contact> contacts = [SELECT Id, Active__c FROM Contact];
+        List<Contact> contacts = [SELECT Id, AccountId, Active__c FROM Contact];
         for (Contact con : contacts) 
         {
             con.Active__c = true;
