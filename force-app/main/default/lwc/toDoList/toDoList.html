@@ -1,0 +1,53 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card  title="My To Dos">
+        <lightning-button label="New" slot="actions" onclick={handleNewToDoClicked}></lightning-button>
+        <p class="slds-p-horizontal_small">
+            <template if:true={haveToDos}>
+                <lightning-datatable
+                    hide-checkbox-column
+                    key-field="id"
+                    data={toDos}
+                    columns={columns}
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </template>
+            <template if:false={haveToDos}>
+                All Caught Up!
+            </template>
+        </p>
+        <p slot="footer">
+            To improve this further, we could replace all hard-coded strings with CustomLabels to cater for translations
+            <br />The modal itself could also be a made into a generic re-usable component with action and content slots to cater for further usage.
+            <br />
+            <br />Made by Jack Kittridge
+        </p>
+    </lightning-card>
+
+    <template if:true={showModal}>
+        <section aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container ">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_small">{modalTitle}</h2>
+                    <lightning-icon class="slds-modal__close" icon-name="utility:close" size="small" onclick={closeModal}></lightning-icon>
+                </header>
+                <div class="slds-modal__content">
+                    <div class="slds-p-around_small">
+                        <lightning-record-form 
+                            object-api-name={toDoApiName}
+                            fields={toDoFields}
+                            onsuccess={handleToDoSaved}
+                            record-id={editRecordId}>
+                        </lightning-record-form>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Cancel" onclick={closeModal} class="slds-p-around_x-small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
+    
+    
